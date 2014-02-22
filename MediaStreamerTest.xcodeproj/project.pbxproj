@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4327F46318B8F9F300AEC503 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46218B8F9F300AEC503 /* MobileCoreServices.framework */; };
+		4327F46518B8F9FC00AEC503 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46418B8F9FC00AEC503 /* CFNetwork.framework */; };
+		4327F46718B8FA1000AEC503 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46618B8FA1000AEC503 /* Accelerate.framework */; };
+		4327F46918B8FA1300AEC503 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46818B8FA1300AEC503 /* AVFoundation.framework */; };
+		4327F46B18B8FA1A00AEC503 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46A18B8FA1A00AEC503 /* MediaPlayer.framework */; };
+		4327F46D18B8FA2A00AEC503 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46C18B8FA2A00AEC503 /* CoreAudio.framework */; };
+		4327F46F18B8FA2E00AEC503 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46E18B8FA2E00AEC503 /* AudioToolbox.framework */; };
+		4327F47318B8FBD200AEC503 /* MSTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4327F47218B8FBD200AEC503 /* MSTConstants.m */; };
 		4383F0C118B8C1DD00C2D0DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C018B8C1DD00C2D0DF /* Foundation.framework */; };
 		4383F0C318B8C1DD00C2D0DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C218B8C1DD00C2D0DF /* CoreGraphics.framework */; };
 		4383F0C518B8C1DD00C2D0DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C418B8C1DD00C2D0DF /* UIKit.framework */; };
@@ -59,6 +67,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4327F46218B8F9F300AEC503 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		4327F46418B8F9FC00AEC503 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		4327F46618B8FA1000AEC503 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		4327F46818B8FA1300AEC503 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4327F46A18B8FA1A00AEC503 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		4327F46C18B8FA2A00AEC503 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		4327F46E18B8FA2E00AEC503 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4327F47118B8FBD200AEC503 /* MSTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTConstants.h; sourceTree = "<group>"; };
+		4327F47218B8FBD200AEC503 /* MSTConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTConstants.m; sourceTree = "<group>"; };
 		4383F0BD18B8C1DD00C2D0DF /* MediaStreamerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaStreamerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4383F0C018B8C1DD00C2D0DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4383F0C218B8C1DD00C2D0DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -141,6 +158,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4327F46F18B8FA2E00AEC503 /* AudioToolbox.framework in Frameworks */,
+				4327F46D18B8FA2A00AEC503 /* CoreAudio.framework in Frameworks */,
+				4327F46B18B8FA1A00AEC503 /* MediaPlayer.framework in Frameworks */,
+				4327F46918B8FA1300AEC503 /* AVFoundation.framework in Frameworks */,
+				4327F46718B8FA1000AEC503 /* Accelerate.framework in Frameworks */,
+				4327F46518B8F9FC00AEC503 /* CFNetwork.framework in Frameworks */,
+				4327F46318B8F9F300AEC503 /* MobileCoreServices.framework in Frameworks */,
 				4383F0C318B8C1DD00C2D0DF /* CoreGraphics.framework in Frameworks */,
 				4383F0C518B8C1DD00C2D0DF /* UIKit.framework in Frameworks */,
 				4383F0C118B8C1DD00C2D0DF /* Foundation.framework in Frameworks */,
@@ -160,6 +184,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4327F47018B8FBB100AEC503 /* Custom Declarations */ = {
+			isa = PBXGroup;
+			children = (
+				4327F47118B8FBD200AEC503 /* MSTConstants.h */,
+				4327F47218B8FBD200AEC503 /* MSTConstants.m */,
+			);
+			name = "Custom Declarations";
+			sourceTree = "<group>";
+		};
 		4383F0B418B8C1DD00C2D0DF = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +215,13 @@
 		4383F0BF18B8C1DD00C2D0DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4327F46E18B8FA2E00AEC503 /* AudioToolbox.framework */,
+				4327F46C18B8FA2A00AEC503 /* CoreAudio.framework */,
+				4327F46A18B8FA1A00AEC503 /* MediaPlayer.framework */,
+				4327F46818B8FA1300AEC503 /* AVFoundation.framework */,
+				4327F46618B8FA1000AEC503 /* Accelerate.framework */,
+				4327F46418B8F9FC00AEC503 /* CFNetwork.framework */,
+				4327F46218B8F9F300AEC503 /* MobileCoreServices.framework */,
 				4383F0C018B8C1DD00C2D0DF /* Foundation.framework */,
 				4383F0C218B8C1DD00C2D0DF /* CoreGraphics.framework */,
 				4383F0C418B8C1DD00C2D0DF /* UIKit.framework */,
@@ -195,6 +235,7 @@
 			children = (
 				4383F14418B8DF6800C2D0DF /* ViewControllers */,
 				4383F0F518B8DEF900C2D0DF /* Model */,
+				4327F47018B8FBB100AEC503 /* Custom Declarations */,
 				4383F0CF18B8C1DD00C2D0DF /* MSTAppDelegate.h */,
 				4383F0D018B8C1DD00C2D0DF /* MSTAppDelegate.m */,
 				4383F0D218B8C1DD00C2D0DF /* Main.storyboard */,
@@ -449,6 +490,7 @@
 				4383F0CD18B8C1DD00C2D0DF /* main.m in Sources */,
 				4383F13218B8DF4500C2D0DF /* DOUAudioAnalyzer.m in Sources */,
 				4383F10218B8DF2C00C2D0DF /* GCDWebServerConnection.m in Sources */,
+				4327F47318B8FBD200AEC503 /* MSTConstants.m in Sources */,
 				4383F13D18B8DF4500C2D0DF /* DOUAudioStreamer.m in Sources */,
 				4383F13418B8DF4500C2D0DF /* DOUAudioEventLoop.m in Sources */,
 				4383F13718B8DF4500C2D0DF /* DOUAudioFrequencyAnalyzer.m in Sources */,
@@ -663,6 +705,7 @@
 				4383F0F118B8C1DD00C2D0DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4383F0F218B8C1DD00C2D0DF /* Build configuration list for PBXNativeTarget "MediaStreamerTestTests" */ = {
 			isa = XCConfigurationList;
@@ -671,6 +714,7 @@
 				4383F0F418B8C1DD00C2D0DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

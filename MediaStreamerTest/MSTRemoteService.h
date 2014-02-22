@@ -10,4 +10,13 @@
 
 @interface MSTRemoteService : NSObject
 
+@property (nonatomic, readonly) NSNetService *service;
+@property (nonatomic, readonly) NSString     *resolvedAddress;
+@property (nonatomic, readonly) NSString     *streamingLink;
+
+@property BOOL isServer;
+@property BOOL isStreaming;
+
+- (id)initWithService: (NSNetService *) service;
+
 @end

@@ -10,4 +10,38 @@
 
 @implementation MSTConnectionManager (ServerAPI)
 
+#pragma mark - Server methods
+
+- (void) addAPIHandlers
+{
+    
+}
+
+- (void) startStreamingFile: (NSString *) filePath
+{
+    
+}
+
+- (void) stopStreaming
+{
+    
+}
+
+- (void) setVolumeLevelForClient: (MSTRemoteService *) streamingClient
+{
+    
+}
+
+- (void) disconnectClient: (MSTRemoteService *) streamingClient
+{
+    
+}
+
+#pragma mark - Client methods
+
+- (void) requestStreamFromSource: (MSTRemoteService *) streamingSource
+{
+    
+}
+
 @end

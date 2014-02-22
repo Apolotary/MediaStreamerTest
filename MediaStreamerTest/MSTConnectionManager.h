@@ -9,14 +9,15 @@
 // Connection singleton that contains Bonjour service scanning + GCDWebServer instance
 
 #import <Foundation/Foundation.h>
+#import "GCDWebServer.h"
 
 @interface MSTConnectionManager : NSObject
 
 @property BOOL isServer;
-@property (nonatomic, strong) NSString *serverName;
+@property (nonatomic, readonly) GCDWebServer *webServer;
+@property (nonatomic, strong)   NSString     *serverName;
 
 + (MSTConnectionManager *) sharedInstance;
-- (NSArray *) getAvailableDevicesList;
-
+- (void) searchForAvailableServers;
 
 @end

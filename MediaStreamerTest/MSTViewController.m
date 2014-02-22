@@ -7,8 +7,12 @@
 //
 
 #import "MSTViewController.h"
+#import "MSTConnectionManager.h"
 
 @interface MSTViewController ()
+{
+    MSTConnectionManager *_connectionManager;
+}
 
 @end
 
@@ -17,7 +21,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	_connectionManager = [MSTConnectionManager sharedInstance];
+    [_connectionManager searchForAvailableServers];
 }
 
 - (void)didReceiveMemoryWarning

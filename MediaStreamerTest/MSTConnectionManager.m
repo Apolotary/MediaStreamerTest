@@ -35,6 +35,9 @@
         [_serviceBrowser setDelegate:self];
         
         _availableServices = [[NSMutableArray alloc] init];
+        
+        self.isServer = NO;
+        self.isStreaming = NO;
     }
     return self;
 }
@@ -68,12 +71,15 @@
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing
 {
-    MSTRemoteService *remoteService = [[MSTRemoteService alloc] initWithService:aNetService];
-    [_availableServices addObject:remoteService];
-    
-    if (!moreComing)
+    if (![aNetService.name isEqualToString:_webServer.bonjourName])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kServiceSearchFinishedNotification object:nil];
+        MSTRemoteService *remoteService = [[MSTRemoteService alloc] initWithService:aNetService];
+        [_availableServices addObject:remoteService];
+        
+        if (!moreComing)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kServiceSearchFinishedNotification object:nil];
+        }
     }
 }
 

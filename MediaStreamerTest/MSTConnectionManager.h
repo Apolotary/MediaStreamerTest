@@ -14,8 +14,10 @@
 @interface MSTConnectionManager : NSObject
 
 @property BOOL isServer;
+@property BOOL isStreaming;
 @property (nonatomic, readonly) GCDWebServer *webServer;
 @property (nonatomic, strong)   NSString     *serverName;
+@property (nonatomic, readonly) NSString *streamingFilePath;
 
 + (MSTConnectionManager *) sharedInstance;
 - (void) searchForAvailableServers;

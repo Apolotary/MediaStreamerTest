@@ -14,9 +14,6 @@
 
 @interface MSTConnectionManager (ServerAPI)
 
-@property BOOL isStreaming;
-@property NSString *streamingFilePath;
-
 // server methods
 - (void) addAPIHandlers;
 

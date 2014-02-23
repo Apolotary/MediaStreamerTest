@@ -7,14 +7,33 @@
 //
 
 #import "MSTConnectionManager+ServerAPI.h"
+#import "MSTConstants.h"
 
 @implementation MSTConnectionManager (ServerAPI)
+
+#pragma mark - API Handlers
+
+
 
 #pragma mark - Server methods
 
 - (void) addAPIHandlers
 {
-    
+    [self.webServer addDefaultHandlerForMethod:@"GET"
+                                  requestClass:[GCDWebServerRequest class]
+                                  processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request)
+    {
+        NSDictionary *responseDictionary = @{kAPIResponseKeyServiceName:   self.webServer.bonjourName,
+                                             kAPIResponseKeyIsServer:      [NSNumber numberWithBool:self.isServer],
+                                             kAPIResponseKeyIsStreaming:   [NSNumber numberWithBool:self.isStreaming],
+                                             kAPIResponseKeyStreamingLink: self.isStreaming ? self.streamingFilePath : @""};
+        
+        NSError *error;
+        NSData * responseData = [NSJSONSerialization dataWithJSONObject:responseDictionary
+                                                                options:NSJSONWritingPrettyPrinted
+                                                                  error:&error];
+        return [GCDWebServerDataResponse responseWithData:responseData contentType:@"application/json"];
+    }];
 }
 
 - (void) startStreamingFile: (NSString *) filePath

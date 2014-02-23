@@ -174,6 +174,7 @@ static NSStringEncoding _StringEncodingFromCharset(NSString* charset) {
 }
 
 - (void)dealloc {
+    NSLog(@"%i", _file);
   DCHECK(_file < 0);
   unlink([_filePath fileSystemRepresentation]);
   ARC_RELEASE(_filePath);

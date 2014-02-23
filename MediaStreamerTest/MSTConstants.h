@@ -8,12 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-extern const NSUInteger  kServicePortNumber;
-extern NSString * const  kServiceDomain;
-extern NSString * const  kServiceType;
-extern NSString * const  kServiceErrorNotification;
-extern NSString * const  kServiceSearchFinishedNotification;
-extern NSString * const  kServiceRemovedNotification;
+extern const NSUInteger kServicePortNumber;
+extern NSString * const kServiceDomain;
+extern NSString * const kServiceType;
+
+extern NSString * const kServiceErrorNotification;
+extern NSString * const kServiceSearchFinishedNotification;
+extern NSString * const kServiceRemovedNotification;
+
+extern NSString * const kAPIResponseKeyServiceName;
+extern NSString * const kAPIResponseKeyIsServer;
+extern NSString * const kAPIResponseKeyIsStreaming;
+extern NSString * const kAPIResponseKeyStreamingLink;
 
 @interface MSTConstants : NSObject
 

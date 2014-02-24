@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define CONTENT_TYPE_JSON @"application/json"
+
 extern const NSUInteger kServicePortNumber;
 extern NSString * const kServiceDomain;
 extern NSString * const kServiceType;
@@ -20,6 +22,16 @@ extern NSString * const kAPIResponseKeyServiceName;
 extern NSString * const kAPIResponseKeyIsServer;
 extern NSString * const kAPIResponseKeyIsStreaming;
 extern NSString * const kAPIResponseKeyStreamingLink;
+
+extern NSString * const kAPIResponseKeyVolumeLevel;
+
+extern NSString * const kAPIPathGetStream;
+extern NSString * const kAPIPathSetVolume;
+extern NSString * const kAPIPathSetStream;
+
+// API Response codes
+extern const NSUInteger kResponseCodeSuccess;
+extern const NSUInteger kResponseCodeBadRequest;
 
 @interface MSTConstants : NSObject
 

@@ -21,6 +21,16 @@ NSString * const kAPIResponseKeyIsServer      = @"IsServer";
 NSString * const kAPIResponseKeyIsStreaming   = @"IsStreaming";
 NSString * const kAPIResponseKeyStreamingLink = @"StreamingLink";
 
+NSString * const kAPIResponseKeyVolumeLevel   = @"VolumeLevel";
+
+NSString * const kAPIPathGetStream = @"/api/getStream";
+NSString * const kAPIPathSetVolume = @"/api/setVolume";
+NSString * const kAPIPathSetStream = @"/api/setStream";
+
+// API Response codes
+const NSUInteger kResponseCodeSuccess    = 200;
+const NSUInteger kResponseCodeBadRequest = 400;
+
 @implementation MSTConstants
 
 @end

@@ -8,7 +8,7 @@
 
 #import "MSTRemoteService.h"
 
-@interface MSTRemoteService () <NSNetServiceDelegate, NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface MSTRemoteService () <NSNetServiceDelegate>
 
 @end
 
@@ -36,23 +36,6 @@
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict
 {
     //TODO: fix here
-}
-
-#pragma mark - NSURLConnection Delegate methods
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    
 }
 
 @end

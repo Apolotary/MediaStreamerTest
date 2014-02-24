@@ -13,7 +13,6 @@
 
 @interface MSTConnectionManager () <NSNetServiceBrowserDelegate>
 {
-    NSMutableArray      *_availableServices;
     NSNetServiceBrowser *_serviceBrowser;
 }
 

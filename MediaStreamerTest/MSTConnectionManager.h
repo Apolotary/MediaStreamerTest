@@ -15,9 +15,10 @@
 
 @property BOOL isServer;
 @property BOOL isStreaming;
-@property (nonatomic, readonly) GCDWebServer *webServer;
-@property (nonatomic, strong)   NSString     *serverName;
-@property (nonatomic, readonly) NSString *streamingFilePath;
+@property (nonatomic, readonly) GCDWebServer   *webServer;
+@property (nonatomic, readonly) NSMutableArray *availableServices; //!!!: Bad, bad idea! Gotta change that later
+@property (nonatomic, strong)   NSString       *serverName;
+@property (nonatomic, strong)   NSURL          *streamingFilePath;
 
 + (MSTConnectionManager *) sharedInstance;
 - (void) searchForAvailableServers;

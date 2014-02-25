@@ -17,7 +17,9 @@
 @property BOOL isServer;
 @property BOOL isStreaming;
 @property BOOL isResolved;
+@property BOOL isLocal;
 
-- (id)initWithService: (NSNetService *) service;
+- (id)initWithService: (NSNetService *) service
+              isLocal: (BOOL) isLocal;
 
 @end

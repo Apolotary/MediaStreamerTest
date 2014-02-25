@@ -17,6 +17,7 @@ extern NSString * const kServiceType;
 extern NSString * const kServiceErrorNotification;
 extern NSString * const kServiceSearchFinishedNotification;
 extern NSString * const kServiceRemovedNotification;
+extern NSString * const kServiceReadyForStreamingNotification;
 
 extern NSString * const kAPIResponseKeyServiceName;
 extern NSString * const kAPIResponseKeyIsServer;

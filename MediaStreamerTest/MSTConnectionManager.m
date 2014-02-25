@@ -72,7 +72,7 @@
 {
     if (![aNetService.name isEqualToString:_webServer.bonjourName])
     {
-        MSTRemoteService *remoteService = [[MSTRemoteService alloc] initWithService:aNetService];
+        MSTRemoteService *remoteService = [[MSTRemoteService alloc] initWithService:aNetService isLocal:NO];
         [_availableServices addObject:remoteService];
         
         if (!moreComing)
@@ -82,7 +82,7 @@
     }
     else
     {
-        _localService = [[MSTRemoteService alloc] initWithService:aNetService];
+        _localService = [[MSTRemoteService alloc] initWithService:aNetService isLocal:YES];
     }
 }
 

@@ -17,6 +17,7 @@
 @implementation MSTRemoteService
 
 - (id)initWithService: (NSNetService *) service
+              isLocal: (BOOL) isLocal
 {
     self = [super init];
     if (self) {
@@ -26,6 +27,7 @@
         _isServer = NO;
         _isStreaming = NO;
         _isResolved = NO;
+        _isLocal = isLocal;
     }
     return self;
 }
@@ -53,6 +55,11 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
+    
+    if (_isLocal)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kServiceReadyForStreamingNotification object:nil];
+    }
 }
 
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict

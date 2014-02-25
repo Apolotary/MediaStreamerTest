@@ -15,6 +15,7 @@ NSString * const kServiceType       = @"_http._tcp";
 NSString * const kServiceErrorNotification          = @"ServiceErrorNotification";
 NSString * const kServiceSearchFinishedNotification = @"ServiceSearchFinishedNotification";
 NSString * const kServiceRemovedNotification        = @"ServiceRemovedNotification";
+NSString * const kServiceReadyForStreamingNotification = @"ServiceReadyForStreamingNotification";
 
 NSString * const kAPIResponseKeyServiceName   = @"ServiceName";
 NSString * const kAPIResponseKeyIsServer      = @"IsServer";

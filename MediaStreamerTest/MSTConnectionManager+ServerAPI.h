@@ -17,7 +17,7 @@
 // server methods
 - (void) addAPIHandlers;
 
-- (void) startStreamingFile: (NSURL *) filePath;
+- (void) startStreamingFile: (NSString *) filePath;
 - (void) stopStreaming;
 
 - (void) setVolumeLevelForClient: (MSTRemoteService *) streamingClient;

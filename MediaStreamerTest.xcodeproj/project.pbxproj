@@ -16,7 +16,7 @@
 		4327F46D18B8FA2A00AEC503 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46C18B8FA2A00AEC503 /* CoreAudio.framework */; };
 		4327F46F18B8FA2E00AEC503 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46E18B8FA2E00AEC503 /* AudioToolbox.framework */; };
 		4327F47318B8FBD200AEC503 /* MSTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4327F47218B8FBD200AEC503 /* MSTConstants.m */; };
-		4330FE9918BA4C1D00F636D0 /* song.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4330FE9818BA4C1D00F636D0 /* song.mp3 */; };
+		4330FE9B18BCBA8800F636D0 /* bass.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4330FE9A18BCBA8800F636D0 /* bass.mp3 */; };
 		4383F0C118B8C1DD00C2D0DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C018B8C1DD00C2D0DF /* Foundation.framework */; };
 		4383F0C318B8C1DD00C2D0DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C218B8C1DD00C2D0DF /* CoreGraphics.framework */; };
 		4383F0C518B8C1DD00C2D0DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C418B8C1DD00C2D0DF /* UIKit.framework */; };
@@ -78,7 +78,7 @@
 		4327F46E18B8FA2E00AEC503 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4327F47118B8FBD200AEC503 /* MSTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTConstants.h; sourceTree = "<group>"; };
 		4327F47218B8FBD200AEC503 /* MSTConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTConstants.m; sourceTree = "<group>"; };
-		4330FE9818BA4C1D00F636D0 /* song.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = song.mp3; sourceTree = "<group>"; };
+		4330FE9A18BCBA8800F636D0 /* bass.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bass.mp3; sourceTree = "<group>"; };
 		4383F0BD18B8C1DD00C2D0DF /* MediaStreamerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaStreamerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4383F0C018B8C1DD00C2D0DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4383F0C218B8C1DD00C2D0DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -256,7 +256,7 @@
 		4383F0C718B8C1DD00C2D0DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4330FE9818BA4C1D00F636D0 /* song.mp3 */,
+				4330FE9A18BCBA8800F636D0 /* bass.mp3 */,
 				4383F0C818B8C1DD00C2D0DF /* MediaStreamerTest-Info.plist */,
 				4383F0C918B8C1DD00C2D0DF /* InfoPlist.strings */,
 				4383F0CC18B8C1DD00C2D0DF /* main.m */,
@@ -467,9 +467,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4383F0D918B8C1DD00C2D0DF /* Images.xcassets in Resources */,
-				4330FE9918BA4C1D00F636D0 /* song.mp3 in Resources */,
 				4383F0CB18B8C1DD00C2D0DF /* InfoPlist.strings in Resources */,
 				4383F0D418B8C1DD00C2D0DF /* Main.storyboard in Resources */,
+				4330FE9B18BCBA8800F636D0 /* bass.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,7 +672,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MediaStreamerTest/MediaStreamerTest-Prefix.pch";
 				INFOPLIST_FILE = "MediaStreamerTest/MediaStreamerTest-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -687,7 +687,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MediaStreamerTest/MediaStreamerTest-Prefix.pch";
 				INFOPLIST_FILE = "MediaStreamerTest/MediaStreamerTest-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

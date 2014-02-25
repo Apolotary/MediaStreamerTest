@@ -26,6 +26,9 @@ NSString * const kAPIResponseKeyVolumeLevel   = @"VolumeLevel";
 NSString * const kAPIPathGetStream = @"/api/getStream";
 NSString * const kAPIPathSetVolume = @"/api/setVolume";
 NSString * const kAPIPathSetStream = @"/api/setStream";
+NSString * const kAPIPathStopReceivingStream = @"/api/stopReceivingStream";
+
+NSString * const kPlaybackStopCurrentStream = @"PlaybackStopCurrentStream";
 
 // API Response codes
 const NSUInteger kResponseCodeSuccess    = 200;

@@ -80,6 +80,10 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kServiceSearchFinishedNotification object:nil];
         }
     }
+    else
+    {
+        _localService = [[MSTRemoteService alloc] initWithService:aNetService];
+    }
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing

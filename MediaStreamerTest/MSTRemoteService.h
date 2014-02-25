@@ -12,10 +12,11 @@
 
 @property (nonatomic, readonly) NSNetService *service;
 @property (nonatomic, readonly) NSString     *resolvedAddress;
-@property (nonatomic, readonly) NSString     *streamingLink;
+@property (nonatomic, readonly) NSURL        *streamingLink;
 
 @property BOOL isServer;
 @property BOOL isStreaming;
+@property BOOL isResolved;
 
 - (id)initWithService: (NSNetService *) service;
 

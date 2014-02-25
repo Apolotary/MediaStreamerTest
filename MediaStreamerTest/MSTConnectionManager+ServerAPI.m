@@ -9,6 +9,8 @@
 #import "MSTConnectionManager+ServerAPI.h"
 #import "MSTConstants.h"
 
+#import "AFNetworking.h"
+
 @implementation MSTConnectionManager (ServerAPI)
 
 #pragma mark - API Handlers
@@ -31,7 +33,7 @@
 {
     if(!self.isStreaming)
     {
-        // set Volume
+        //TODO: set Volume
         return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
     }
     return [GCDWebServerResponse responseWithStatusCode:kResponseCodeBadRequest];
@@ -48,7 +50,7 @@
             
             self.streamingFilePath = [jsonDict valueForKey:kAPIResponseKeyStreamingLink];
             NSLog(@"New streaming URL: %@", self.streamingFilePath);
-            //TODO set a notification
+            //TODO: set a notification
         }
         
         return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
@@ -69,6 +71,15 @@
                                                              error:&error];
     
     return [GCDWebServerDataResponse responseWithData:responseData contentType:CONTENT_TYPE_JSON];
+}
+
+- (GCDWebServerResponse *) stopReceivingStream
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackStopCurrentStream object:nil];
+    
+    [self setStreamingFilePath:[NSURL URLWithString:@""]];
+    
+    return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
 }
 
 #pragma mark - Server methods
@@ -102,16 +113,39 @@
                            processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
                                return [self setPlaybackVolumeForRequest:(GCDWebServerDataRequest *)request];
                            }];
+    
+    NSLog(@"Server name: %@", [GCDWebServer serverName]);
 }
 
-- (void) startStreamingFile: (NSURL *) filePath
+- (void) startStreamingFile: (NSString *) filePath
 {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
+    NSError *error;
+    NSData *resultData = [NSJSONSerialization dataWithJSONObject:[NSString stringWithFormat:@"http://%@:%d%@", self.localService.resolvedAddress, kServicePortNumber, filePath]
+                                                         options:NSJSONWritingPrettyPrinted
+                                                           error:&error];
+    
+    for (MSTRemoteService *remoteService in self.availableServices)
+    {
+        if ([remoteService isResolved])
+        {
+            [manager POST:[NSString stringWithFormat:@"http://%@:%d%@", self.localService.resolvedAddress, kServicePortNumber, kAPIPathSetStream] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                [formData appendPartWithFileData:resultData name:@"json" fileName:@"" mimeType:@"application/json"];
+            } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"Successfully sent stream %@", responseObject);
+                
+                //TODO: send a notification
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error, unable to send stream: %@", error.description);
+            }];
+        }
+    }
 }
 
 - (void) stopStreaming
 {
-    
+    //TODO: implement streaming options
 }
 
 - (void) setVolumeLevelForClient: (MSTRemoteService *) streamingClient
@@ -121,6 +155,8 @@
 
 - (void) disconnectClient: (MSTRemoteService *) streamingClient
 {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     
 }
 

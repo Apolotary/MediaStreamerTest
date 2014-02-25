@@ -7,6 +7,8 @@
 //
 
 #import "MSTRemoteService.h"
+#import "MSTConstants.h"
+#import "AFNetworking.h"
 
 @interface MSTRemoteService () <NSNetServiceDelegate>
 
@@ -23,19 +25,41 @@
         [_service resolveWithTimeout:0.0];
         _isServer = NO;
         _isStreaming = NO;
+        _isResolved = NO;
     }
     return self;
+}
+
+- (void) parseServiceJSON: (NSDictionary *) jsonDictionary
+{
+    _isServer = [[jsonDictionary objectForKey:kAPIResponseKeyIsServer] boolValue];
+    _isStreaming = [[jsonDictionary objectForKey:kAPIResponseKeyIsStreaming] boolValue];
+    _streamingLink = [NSURL URLWithString:[jsonDictionary objectForKey:kAPIResponseKeyStreamingLink]];
 }
 
 - (void)netServiceDidResolveAddress:(NSNetService *)sender
 {
     NSLog(@"resolved DNS: %@", sender.hostName);
     
+    _isResolved = YES;
+    _resolvedAddress = sender.hostName;
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:[NSString stringWithFormat:@"http://%@:%d", sender.hostName, kServicePortNumber] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        
+        [self parseServiceJSON:responseObject];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict
 {
-    //TODO: fix here
+    //TODO: add error handling
+    NSLog(@"Resolving error: %@", errorDict);
+    _isResolved = NO;
 }
 
 @end

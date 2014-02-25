@@ -9,16 +9,18 @@
 // Connection singleton that contains Bonjour service scanning + GCDWebServer instance
 
 #import <Foundation/Foundation.h>
+#import "MSTRemoteService.h"
 #import "GCDWebServer.h"
 
 @interface MSTConnectionManager : NSObject
 
 @property BOOL isServer;
 @property BOOL isStreaming;
-@property (nonatomic, readonly) GCDWebServer   *webServer;
-@property (nonatomic, readonly) NSMutableArray *availableServices; //!!!: Bad, bad idea! Gotta change that later
-@property (nonatomic, strong)   NSString       *serverName;
-@property (nonatomic, strong)   NSURL          *streamingFilePath;
+@property (nonatomic, readonly) GCDWebServer     *webServer;
+@property (nonatomic, readonly) NSMutableArray   *availableServices; //TODO: Bad, bad idea! Gotta change that later
+@property (nonatomic, readonly) MSTRemoteService *localService;
+@property (nonatomic, strong)   NSString         *serverName;
+@property (nonatomic, strong)   NSURL            *streamingFilePath;
 
 + (MSTConnectionManager *) sharedInstance;
 - (void) searchForAvailableServers;

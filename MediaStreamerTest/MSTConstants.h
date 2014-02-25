@@ -28,6 +28,9 @@ extern NSString * const kAPIResponseKeyVolumeLevel;
 extern NSString * const kAPIPathGetStream;
 extern NSString * const kAPIPathSetVolume;
 extern NSString * const kAPIPathSetStream;
+extern NSString * const kAPIPathStopReceivingStream;
+
+extern NSString * const kPlaybackStopCurrentStream;
 
 // API Response codes
 extern const NSUInteger kResponseCodeSuccess;

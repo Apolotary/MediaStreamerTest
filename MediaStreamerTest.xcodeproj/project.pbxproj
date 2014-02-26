@@ -20,6 +20,7 @@
 		4330FE9D18BCF4A800F636D0 /* acoustic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4330FE9C18BCF4A800F636D0 /* acoustic.mp3 */; };
 		4330FEA018BCF52200F636D0 /* MSTRemoteServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4330FE9F18BCF52200F636D0 /* MSTRemoteServiceViewController.m */; };
 		4330FEA318BD7B1B00F636D0 /* MSTServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4330FEA218BD7B1B00F636D0 /* MSTServiceCell.m */; };
+		4330FEA618BD8CD700F636D0 /* MSTWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4330FEA518BD8CD700F636D0 /* MSTWebServerRequest.m */; };
 		4383F0C118B8C1DD00C2D0DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C018B8C1DD00C2D0DF /* Foundation.framework */; };
 		4383F0C318B8C1DD00C2D0DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C218B8C1DD00C2D0DF /* CoreGraphics.framework */; };
 		4383F0C518B8C1DD00C2D0DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C418B8C1DD00C2D0DF /* UIKit.framework */; };
@@ -87,6 +88,8 @@
 		4330FE9F18BCF52200F636D0 /* MSTRemoteServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTRemoteServiceViewController.m; sourceTree = "<group>"; };
 		4330FEA118BD7B1B00F636D0 /* MSTServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTServiceCell.h; sourceTree = "<group>"; };
 		4330FEA218BD7B1B00F636D0 /* MSTServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTServiceCell.m; sourceTree = "<group>"; };
+		4330FEA418BD8CD700F636D0 /* MSTWebServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTWebServerRequest.h; sourceTree = "<group>"; };
+		4330FEA518BD8CD700F636D0 /* MSTWebServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTWebServerRequest.m; sourceTree = "<group>"; };
 		4383F0BD18B8C1DD00C2D0DF /* MediaStreamerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaStreamerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4383F0C018B8C1DD00C2D0DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4383F0C218B8C1DD00C2D0DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -387,6 +390,8 @@
 				4383F14A18B8DFAB00C2D0DF /* MSTConnectionManager+ServerAPI.m */,
 				4383F15A18B8EDE200C2D0DF /* MSTRemoteService.h */,
 				4383F15B18B8EDE200C2D0DF /* MSTRemoteService.m */,
+				4330FEA418BD8CD700F636D0 /* MSTWebServerRequest.h */,
+				4330FEA518BD8CD700F636D0 /* MSTWebServerRequest.m */,
 			);
 			name = Server;
 			sourceTree = "<group>";
@@ -554,6 +559,7 @@
 				4383F13D18B8DF4500C2D0DF /* DOUAudioStreamer.m in Sources */,
 				4383F13418B8DF4500C2D0DF /* DOUAudioEventLoop.m in Sources */,
 				4383F13718B8DF4500C2D0DF /* DOUAudioFrequencyAnalyzer.m in Sources */,
+				4330FEA618BD8CD700F636D0 /* MSTWebServerRequest.m in Sources */,
 				4383F13F18B8DF4500C2D0DF /* DOUEAGL1View.m in Sources */,
 				4383F15018B8DFCA00C2D0DF /* MSTAudioManager.m in Sources */,
 				4383F14018B8DF4500C2D0DF /* DOUEAGLView.m in Sources */,

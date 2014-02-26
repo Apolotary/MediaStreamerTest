@@ -21,7 +21,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="mmm-M9-EcO">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="mmm-M9-EcO" customClass="MSTServiceCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mmm-M9-EcO" id="bjo-sr-J9g">
@@ -44,10 +44,16 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="labelServiceName" destination="utq-yw-Z3z" id="QRN-xx-gIy"/>
+                                            <outlet property="labelServiceStatus" destination="GyR-26-Nb1" id="OPf-Zt-rSy"/>
                                             <segue destination="up8-pD-h1Q" kind="modal" identifier="ServiceDetailsSegue" id="aAa-F9-vCF"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="kNy-lm-I15"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="hx1-ZO-AjD"/>
+                                </connections>
                             </tableView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Local Service Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98y-Gr-3vH">
                                 <rect key="frame" x="20" y="29" width="280" height="54"/>
@@ -80,6 +86,9 @@
                                 <state key="normal" title="Start">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="startStreamingButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="BxN-Uy-P8a"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHr-mh-mPG">
                                 <rect key="frame" x="90" y="220" width="66" height="44"/>
@@ -88,6 +97,9 @@
                                 <state key="normal" title="Stop">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="stopStreamingButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="rCg-NW-blQ"/>
+                                </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Local sound file" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgK-oB-J86">
                                 <rect key="frame" x="169" y="188" width="131" height="37"/>
@@ -102,6 +114,9 @@
                                 <state key="normal" title="Play">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="startPlaybackButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="P6u-BC-Agh"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Sk-9K-fxN">
                                 <rect key="frame" x="240" y="220" width="66" height="44"/>
@@ -110,6 +125,9 @@
                                 <state key="normal" title="Stop">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="stopPlaybackButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Ces-h1-XpT"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -147,6 +165,9 @@
                                 <state key="normal" title="Done">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="up8-pD-h1Q" eventType="touchUpInside" id="vAA-8f-VUi"/>
+                                </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Remote Service Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CsY-nC-7T5">
                                 <rect key="frame" x="20" y="32" width="280" height="54"/>
@@ -175,10 +196,19 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="gvh-Yb-wpi">
                                 <rect key="frame" x="37" y="309" width="247" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="adjustVolumeLevel:" destination="up8-pD-h1Q" eventType="valueChanged" id="mA6-XC-t5A"/>
+                                </connections>
                             </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="_labelDNS" destination="Fmx-jn-I9Q" id="Sm5-n9-c01"/>
+                        <outlet property="_labelName" destination="CsY-nC-7T5" id="e6w-Cn-8PJ"/>
+                        <outlet property="_labelStatus" destination="Ue9-XO-tq4" id="PcN-se-pb7"/>
+                        <outlet property="_volumeSlider" destination="gvh-Yb-wpi" id="6bU-hn-R6Q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0rd-Gv-owC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

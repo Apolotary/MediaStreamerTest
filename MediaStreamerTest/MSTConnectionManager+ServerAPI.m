@@ -65,11 +65,24 @@
         if (request.hasBody)
         {
             NSError *error;
-            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[request data] options:NSJSONReadingAllowFragments error:&error];
+            
+            NSString *dataString = [[NSString alloc] initWithData:[request data] encoding:NSUTF8StringEncoding];
+            NSLog(@"String data: %@", dataString);
+            
+            NSRange jsonOpening = [dataString rangeOfString:@"{"];
+            NSRange jsonEnding = [dataString rangeOfString:@"}"];
+            
+            NSRange searchRange = NSMakeRange(jsonOpening.location , jsonEnding.location - jsonOpening.location + 1);
+            
+            NSString *jsonString = [dataString substringWithRange:searchRange];
+            
+            NSLog(@"json string: %@", jsonString);
+            
+            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
             
             self.streamingFilePath = [NSURL URLWithString:[jsonDict objectForKey:kAPIResponseKeyStreamingLink]];
             NSLog(@"New streaming URL: %@", self.streamingFilePath);
-            [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackSetStreamingSource object:nil userInfo:@{kPlaybackSetStreamingSourceKey: [jsonDict objectForKey:kAPIResponseKeyStreamingLink]}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackSetStreamingSource object:nil userInfo:@{kPlaybackSetStreamingSourceKey: self.streamingFilePath.absoluteString}];
         }
         
         return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
@@ -143,7 +156,7 @@
     
     [self.webServer addHandlerForMethod:@"GET"
                                    path:kAPIPathGetStream
-                           requestClass:[GCDWebServerRequest class]
+                           requestClass:[GCDWebServerDataRequest class]
                            processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
                                return [self getStreamingSource];
                            }];
@@ -157,14 +170,14 @@
     
     [self.webServer addHandlerForMethod:@"POST"
                                    path:kAPIPathSetVolume
-                           requestClass:[GCDWebServerRequest class]
+                           requestClass:[GCDWebServerDataRequest class]
                            processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
                                return [self setPlaybackVolumeForRequest:(GCDWebServerDataRequest *)request];
                            }];
     
     [self.webServer addHandlerForMethod:@"POST"
                                    path:kAPIPathStopReceivingStream
-                           requestClass:[GCDWebServerRequest class]
+                           requestClass:[GCDWebServerDataRequest class]
                            processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
                                return [self stopReceivingStreamForRequest:(GCDWebServerDataRequest *) request];
                            }];

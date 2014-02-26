@@ -7,6 +7,9 @@
 //
 
 #import "MSTRemoteServiceViewController.h"
+#import "MSTConstants.h"
+#import "MSTConnectionManager.h"
+#import "MSTConnectionManager+ServerAPI.h"
 
 @interface MSTRemoteServiceViewController ()
 
@@ -23,6 +26,22 @@
     return self;
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [_labelName setText:_remoteService.service.name];
+    [_labelDNS setText:[NSString stringWithFormat:@"%@:%d", _remoteService.resolvedAddress, kServicePortNumber]];
+    
+    if (_remoteService.isStreaming)
+    {
+        [_labelStatus setText:@"Currently streaming"];
+    }
+    else{
+        [_labelStatus setText:@"Ready for streaming"];
+    }
+    
+    [_volumeSlider setValue:_remoteService.volumeLevel animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -33,6 +52,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Button methods
+
+- (IBAction)adjustVolumeLevel:(id)sender
+{
+    [[MSTConnectionManager sharedInstance] setVolumeLevel:_volumeSlider.value forClient:_remoteService];
+}
+
+- (IBAction)doneButtonPressed:(id)sender
+{
+//    [_delegate dismissViewController];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

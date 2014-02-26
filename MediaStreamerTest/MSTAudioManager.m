@@ -12,7 +12,7 @@
 
 @interface MSTAudioManager ()
 {
-    AVAudioPlayer *_mainPlayer;
+    AVPlayer *_mainPlayer;
 }
 
 - (void) addNotificationHandlers;
@@ -56,24 +56,35 @@
 
 #pragma mark - Playback methods
 
-- (void) setStreamingSource: (NSDictionary *) userInfo
+- (void) setStreamingSource: (NSNotification *) notification
 {
-    NSString *urlString = [userInfo objectForKey:kPlaybackSetStreamingSourceKey];
+    NSString *urlString = [notification.userInfo objectForKey:kPlaybackSetStreamingSourceKey];
     [self playFileAtURL:[NSURL URLWithString:urlString]];
 }
 
-- (void) setVolume: (NSDictionary *) userInfo
+- (void) setVolume: (NSNotification *) notification
 {
-    NSNumber *volumeNumber = [userInfo objectForKey:kPlaybackSetVolumeKey];
+    NSNumber *volumeNumber = [notification.userInfo objectForKey:kPlaybackSetVolumeKey];
     [self changeVolumeLevel:volumeNumber.floatValue];
 }
 
 - (void) playFileAtURL: (NSURL *) fileURL
 {
     NSError *error;
-    _mainPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&error];
-    [_mainPlayer setNumberOfLoops:-1];
-    [_mainPlayer play];
+//    _mainPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&error];
+//    [_mainPlayer setNumberOfLoops:-1];
+//    [_mainPlayer play];
+    // NSLog(@"Song URL : %@", aSongURL);
+    
+    AVPlayerItem *aPlayerItem = [[AVPlayerItem alloc] initWithURL:fileURL];
+    AVPlayer *anAudioStreamer = [[AVPlayer alloc] initWithPlayerItem:aPlayerItem];
+    [anAudioStreamer play];
+    
+    // Access Current Time
+    NSTimeInterval aCurrentTime = CMTimeGetSeconds(anAudioStreamer.currentTime);
+    
+    // Access Duration
+    NSTimeInterval aDuration = CMTimeGetSeconds(anAudioStreamer.currentItem.asset.duration);
 }
 
 - (void) playbackStart
@@ -88,7 +99,7 @@
 {
     if (_mainPlayer)
     {
-        [_mainPlayer stop];
+        [_mainPlayer pause];
     }
 }
 

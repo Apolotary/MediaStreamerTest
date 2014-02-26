@@ -37,6 +37,7 @@
     _isServer = [[jsonDictionary objectForKey:kAPIResponseKeyIsServer] boolValue];
     _isStreaming = [[jsonDictionary objectForKey:kAPIResponseKeyIsStreaming] boolValue];
     _streamingLink = [NSURL URLWithString:[jsonDictionary objectForKey:kAPIResponseKeyStreamingLink]];
+    _volumeLevel = [[jsonDictionary objectForKey:kAPIResponseKeyVolumeLevel] floatValue];
 }
 
 - (void)netServiceDidResolveAddress:(NSNetService *)sender

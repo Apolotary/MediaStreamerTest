@@ -10,4 +10,13 @@
 
 @interface MSTAudioManager : NSObject
 
+@property float volumeLevel;
+
++ (MSTAudioManager *) sharedInstance;
+
+- (void) playFileAtURL: (NSURL *) fileURL;
+- (void) playbackStart;
+- (void) playbackStop;
+- (void) changeVolumeLevel: (float) newVolumeLevel;
+
 @end

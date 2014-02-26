@@ -24,5 +24,7 @@
 
 + (MSTConnectionManager *) sharedInstance;
 - (void) searchForAvailableServers;
+- (BOOL) isRemoteStreamingServiceAvailable;
+- (id)   getRemoteStreamingService;
 
 @end

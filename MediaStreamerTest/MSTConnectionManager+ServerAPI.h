@@ -21,7 +21,8 @@
               withExtension: (NSString *) fileExtension;
 - (void) stopStreaming;
 
-- (void) setVolumeLevelForClient: (MSTRemoteService *) streamingClient;
+- (void) setVolumeLevel: (float) volumeLevel
+              forClient: (MSTRemoteService *) streamingClient;
 - (void) disconnectClient:        (MSTRemoteService *) streamingClient;
 
 // client methods

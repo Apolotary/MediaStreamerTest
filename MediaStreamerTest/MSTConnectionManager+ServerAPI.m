@@ -8,6 +8,7 @@
 
 #import "MSTConnectionManager+ServerAPI.h"
 #import "MSTConstants.h"
+#import "MSTAudioManager.h"
 
 #import "AFNetworking.h"
 
@@ -20,6 +21,7 @@
     NSDictionary *responseDictionary = @{kAPIResponseKeyServiceName:   self.webServer.bonjourName,
                                          kAPIResponseKeyIsServer:      [NSNumber numberWithBool:self.isServer],
                                          kAPIResponseKeyIsStreaming:   [NSNumber numberWithBool:self.isStreaming],
+                                         kAPIResponseKeyVolumeLevel:   [NSNumber numberWithFloat:[MSTAudioManager sharedInstance].volumeLevel],
                                          kAPIResponseKeyStreamingLink: self.isStreaming ? self.streamingFilePath.absoluteString : @""};
     
     NSError *error;
@@ -33,10 +35,27 @@
 {
     if(!self.isStreaming)
     {
-        //TODO: set Volume
-        return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
+        if (request.hasBody)
+        {
+            NSError *error;
+            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[request data] options:NSJSONReadingAllowFragments error:&error];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackSetVolume object:nil userInfo:@{kPlaybackSetVolumeKey : [jsonDict objectForKey:kAPIResponseKeyVolumeLevel]}];
+            return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
+        }
     }
     return [GCDWebServerResponse responseWithStatusCode:kResponseCodeBadRequest];
+}
+
+- (GCDWebServerDataResponse *) getCurrentVolumeLevelForRequest: (GCDWebServerDataRequest *) request
+{
+    if(self.isStreaming)
+    {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{kAPIResponseKeyVolumeLevel: [NSNumber numberWithFloat:[MSTAudioManager sharedInstance].volumeLevel]} options:NSJSONWritingPrettyPrinted error:&error];
+        return [GCDWebServerDataResponse responseWithData:jsonData contentType:CONTENT_TYPE_JSON];
+    }
+    return (GCDWebServerDataResponse *) [GCDWebServerResponse responseWithStatusCode:kResponseCodeBadRequest];
 }
 
 - (GCDWebServerResponse *) setStreamingSourceForRequest: (GCDWebServerDataRequest *) request
@@ -50,7 +69,7 @@
             
             self.streamingFilePath = [NSURL URLWithString:[jsonDict objectForKey:kAPIResponseKeyStreamingLink]];
             NSLog(@"New streaming URL: %@", self.streamingFilePath);
-            //TODO: set a notification
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackSetStreamingSource object:nil userInfo:@{kPlaybackSetStreamingSourceKey: [jsonDict objectForKey:kAPIResponseKeyStreamingLink]}];
         }
         
         return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
@@ -96,7 +115,7 @@
 
 - (void) addAPIHandlers
 {
-    NSString* websitePath = [[NSBundle mainBundle] pathForResource:@"/" ofType:nil];
+    NSString* websitePath = [[NSBundle mainBundle] bundlePath];
     
     // Add a default handler to serve static files (i.e. anything other than HTML files)
     [self.webServer addHandlerForBasePath:@"/" localPath:websitePath indexFilename:nil cacheAge:3600];
@@ -108,13 +127,18 @@
         return [self defaultResponse];
     }];
     
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"bass" ofType:@"mp3"];
-    
     [self.webServer addHandlerForMethod:@"GET"
-                                   path:[NSString stringWithFormat:@"/bass.mp3"]
+                              pathRegex:@"/.*\.mp3"
                            requestClass:[GCDWebServerRequest class]
                            processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
-                               return [GCDWebServerFileResponse responseWithFile:filePath];
+                               return [GCDWebServerFileResponse responseWithFile:[websitePath stringByAppendingPathComponent:request.path]];
+                           }];
+    
+    [self.webServer addHandlerForMethod:@"GET"
+                                   path:kAPIPathGetStream
+                           requestClass:[GCDWebServerRequest class]
+                           processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
+                               return [self getStreamingSource];
                            }];
     
     [self.webServer addHandlerForMethod:@"GET"
@@ -172,54 +196,85 @@
                 [formData appendPartWithFileData:resultData name:@"json" fileName:@"" mimeType:@"application/json"];
             } success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Successfully sent stream %@", responseObject);
-                
-                //TODO: send a notification
+                [[NSNotificationCenter defaultCenter] postNotificationName:kServiceStreamingSuccessNotification object:nil userInfo:@{kServiceStreamingSuccessKey: remoteService.service.name}];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error, unable to send stream: %@", error.description);
             }];
         }
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kServiceStartedStreamingNotification object:nil];
 }
 
 - (void) stopStreaming
 {
     //TODO: implement streaming options
+    
+    self.isServer = NO;
+    self.isStreaming = NO;
+    self.streamingFilePath = [NSURL URLWithString:@""];
+    
+    for (MSTRemoteService *streamingClient in self.availableServices)
+    {
+        [self disconnectClient:streamingClient];
+    }
 }
 
-- (void) setVolumeLevelForClient: (MSTRemoteService *) streamingClient
+- (void) setVolumeLevel: (float) volumeLevel
+              forClient: (MSTRemoteService *) streamingClient
 {
-    
+    if (self.isStreaming)
+    {
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        [manager POST:[NSString stringWithFormat:@"http://%@:%d%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathSetVolume] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            
+            NSError *error;
+            NSData *resultData = [NSJSONSerialization dataWithJSONObject:@{kAPIResponseKeyVolumeLevel: [NSNumber numberWithFloat:volumeLevel]} options:NSJSONWritingPrettyPrinted error:&error];
+            
+            [formData appendPartWithFileData:resultData name:@"json" fileName:@"" mimeType:@"application/json"];
+        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Successfully set volume %@", responseObject);
+            // TODO: add a proper notification
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error, unable to set volume: %@", error.description);
+        }];    }
 }
 
 - (void) disconnectClient: (MSTRemoteService *) streamingClient
 {
-//    if (streamingClient.resolvedAddress)
-//    {
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//
-//
-//        NSError *error;
-//        NSData *resultData = [NSJSONSerialization dataWithJSONObject:[NSString stringWithFormat:@"http://%@:%d%@", self.localService.resolvedAddress, kServicePortNumber, filePath]
-//                                                             options:NSJSONWritingPrettyPrinted
-//                                                               error:&error];
-//        
-//        [manager POST:[NSString stringWithFormat:@"http://%@:%d%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathStopReceivingStream] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-//            [formData appendPartWithFileData:resultData name:@"json" fileName:@"" mimeType:@"application/json"];
-//        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            NSLog(@"Successfully sent stream %@", responseObject);
-//            
-//            //TODO: send a notification
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"Error, unable to send stream: %@", error.description);
-//        }];
-//    }
+    if (streamingClient.resolvedAddress)
+    {
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        [manager POST:[NSString stringWithFormat:@"http://%@:%d%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathStopReceivingStream]
+         parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             NSLog(@"Streaming stopped! %@", streamingClient.service.name);
+             [[NSNotificationCenter defaultCenter] postNotificationName:kServiceStreamingStopNotification object:nil userInfo:@{kServiceStreamingStopKey: streamingClient.service.name}];
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"Streaming failure: %@ %@", streamingClient.service.name, error.description);
+         }];
+    }
 }
 
 #pragma mark - Client methods
 
 - (void) requestStreamFromSource: (MSTRemoteService *) streamingSource
 {
-    
+    if (!self.isStreaming)
+    {
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        [manager GET:[NSString stringWithFormat:@"http://%@:%d%@", streamingSource.resolvedAddress, kServicePortNumber, kAPIPathGetStream] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Got stream: %@", [responseObject objectForKey:kAPIResponseKeyStreamingLink]);
+            
+            self.streamingFilePath = [NSURL URLWithString:[responseObject objectForKey:kAPIResponseKeyStreamingLink]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackSetStreamingSource object:nil userInfo:@{kPlaybackSetStreamingSourceKey: [responseObject objectForKey:kAPIResponseKeyStreamingLink]}];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Failed to get stream: %@", error.description);
+        }];
+    }
 }
 
 @end

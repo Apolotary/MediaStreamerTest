@@ -19,6 +19,8 @@
 @property BOOL isResolved;
 @property BOOL isLocal;
 
+@property float volumeLevel;
+
 - (id)initWithService: (NSNetService *) service
               isLocal: (BOOL) isLocal;
 

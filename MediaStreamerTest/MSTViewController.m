@@ -19,6 +19,8 @@
 - (void) addNotificationObservers;
 - (void) removeNotificationObservers;
 
+- (void) updateServiceInfo;
+- (void) startedStreaming;
 - (void) startStreamingFile;
 
 @end
@@ -54,7 +56,8 @@
 
 - (void) addNotificationObservers
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startStreamingFile) name:kServiceReadyForStreamingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateServiceInfo) name:kServiceReadyForStreamingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startedStreaming) name:kServiceStartedStreamingNotification object:nil];
 }
 
 - (void) removeNotificationObservers
@@ -64,9 +67,49 @@
 
 #pragma mark - Connection manager callbacks
 
+- (void) updateServiceInfo
+{
+    
+}
+
+- (void) startedStreaming
+{
+    
+}
+
 - (void) startStreamingFile
 {
     [_connectionManager startStreamingFile:@"bass" withExtension:@"mp3"];
 }
+
+#pragma mark - TableView callbacks
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [NSString stringWithFormat:@"Service name / Is streaming mode on?"];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+#pragma mark - Button methods
+
+- (IBAction)startStreamingButtonPressed:(id)sender;
+- (IBAction)stopStreamingButtonPressed:(id)sender;
+
+- (IBAction)startPlaybackButtonPressed:(id)sender;
+- (IBAction)stopPlaybackButtonPressed:(id)sender;
 
 @end

@@ -61,6 +61,28 @@
     [_serviceBrowser searchForServicesOfType:kServiceType inDomain:kServiceDomain];
 }
 
+- (BOOL) isRemoteStreamingServiceAvailable
+{
+    for (MSTRemoteService *remoteService in self.availableServices)
+    {
+        if (remoteService.isStreaming) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (id) getRemoteStreamingService
+{
+    for (MSTRemoteService *remoteService in self.availableServices)
+    {
+        if (remoteService.isStreaming) {
+            return remoteService;
+        }
+    }
+    return [NSNull null];
+}
+
 #pragma mark - NSNetServiceBrowserDelegate methods
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didNotSearch:(NSDictionary *)errorDict

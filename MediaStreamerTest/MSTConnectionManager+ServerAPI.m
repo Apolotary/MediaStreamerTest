@@ -163,7 +163,7 @@
     
     [self.webServer addHandlerForMethod:@"POST"
                                    path:kAPIPathSetStream
-                           requestClass:[GCDWebServerRequest class]
+                           requestClass:[GCDWebServerDataRequest class]
                            processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
                                return [self setStreamingSourceForRequest:(GCDWebServerDataRequest *)request];
                            }];
@@ -190,14 +190,14 @@
 {
     // setting link and streaming status for future requests
     self.isStreaming = YES;
-    self.streamingFilePath = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%d/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension]];
+    self.streamingFilePath = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%lu/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension]];
     
     
     // sending streaming link to other clients
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     NSError *error;
-    NSData *resultData = [NSJSONSerialization dataWithJSONObject:@{kAPIResponseKeyStreamingLink: [NSString stringWithFormat:@"http://%@:%d/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension]}
+    NSData *resultData = [NSJSONSerialization dataWithJSONObject:@{kAPIResponseKeyStreamingLink: [NSString stringWithFormat:@"http://%@:%lu/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension]}
                                                          options:NSJSONWritingPrettyPrinted
                                                            error:&error];
     
@@ -205,7 +205,7 @@
     {
         if ([remoteService isResolved])
         {
-            [manager POST:[NSString stringWithFormat:@"http://%@:%d%@", remoteService.resolvedAddress, kServicePortNumber, kAPIPathSetStream] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            [manager POST:[NSString stringWithFormat:@"http://%@:%lu%@", remoteService.resolvedAddress, kServicePortNumber, kAPIPathSetStream] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                 [formData appendPartWithFileData:resultData name:@"json" fileName:@"" mimeType:@"application/json"];
             } success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Successfully sent stream %@", responseObject);
@@ -240,7 +240,7 @@
     {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         
-        [manager POST:[NSString stringWithFormat:@"http://%@:%d%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathSetVolume] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [manager POST:[NSString stringWithFormat:@"http://%@:%lu%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathSetVolume] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
             NSError *error;
             NSData *resultData = [NSJSONSerialization dataWithJSONObject:@{kAPIResponseKeyVolumeLevel: [NSNumber numberWithFloat:volumeLevel]} options:NSJSONWritingPrettyPrinted error:&error];

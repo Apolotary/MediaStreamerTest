@@ -17,11 +17,14 @@ PODS:
   - AFNetworking/Serialization (2.1.0)
   - AFNetworking/UIKit (2.1.0):
     - AFNetworking/NSURLConnection
+  - EZAudio (0.0.3)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
+  - EZAudio (~> 0.0.3)
 
 SPEC CHECKSUMS:
   AFNetworking: c7d7901a83f631414c7eda1737261f696101a5cd
+  EZAudio: 8b2138f290208e030bc401fbf6d95eeaa6e205e0
 
 COCOAPODS: 0.29.0

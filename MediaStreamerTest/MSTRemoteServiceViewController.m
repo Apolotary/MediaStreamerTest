@@ -29,7 +29,7 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [_labelName setText:_remoteService.service.name];
-    [_labelDNS setText:[NSString stringWithFormat:@"%@:%d", _remoteService.resolvedAddress, kServicePortNumber]];
+    [_labelDNS setText:[NSString stringWithFormat:@"%@:%lu", _remoteService.resolvedAddress, kServicePortNumber]];
     
     if (_remoteService.isStreaming)
     {

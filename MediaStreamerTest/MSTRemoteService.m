@@ -48,7 +48,7 @@
     _resolvedAddress = sender.hostName;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[NSString stringWithFormat:@"http://%@:%d", sender.hostName, kServicePortNumber] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[NSString stringWithFormat:@"http://%@:%lu", sender.hostName, kServicePortNumber] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         
         [self parseServiceJSON:responseObject];

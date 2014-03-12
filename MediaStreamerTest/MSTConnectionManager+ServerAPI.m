@@ -197,7 +197,7 @@
     // setting link and streaming status for future requests
     self.isStreaming = YES;
     
-    NSString *urlString = [NSString stringWithFormat:@"http://%@:%du/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension];
+    NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension];
     
     self.streamingFilePath = [NSURL URLWithString:urlString];
     
@@ -215,7 +215,7 @@
         if ([remoteService isResolved])
         {
             
-            NSString *postString = [NSString stringWithFormat:@"http://%@:%du%@", remoteService.resolvedAddress, kServicePortNumber, kAPIPathSetStream];
+            NSString *postString = [NSString stringWithFormat:@"http://%@:%d%@", remoteService.resolvedAddress, kServicePortNumber, kAPIPathSetStream];
             
             [manager POST:postString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                 [formData appendPartWithFileData:resultData name:@"json" fileName:@"" mimeType:@"application/json"];
@@ -252,7 +252,7 @@
     {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         
-        NSString *postString = [NSString stringWithFormat:@"http://%@:%du%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathSetVolume];
+        NSString *postString = [NSString stringWithFormat:@"http://%@:%d%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathSetVolume];
         
         [manager POST:postString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             

@@ -49,7 +49,7 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    NSString *getString = [NSString stringWithFormat:@"http://%@:%du", sender.hostName, kServicePortNumber];
+    NSString *getString = [NSString stringWithFormat:@"http://%@:%d", sender.hostName, kServicePortNumber];
     
     [manager GET:getString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);

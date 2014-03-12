@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>76A0E1C1-24C6-4C51-9557-ED151E871B5C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MediaStreamerTest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>227C6C99-E362-4833-A08C-F9092426A962</key>
+		<string>https://github.com/Apolotary/MediaStreamerTest.git</string>
+		<key>67E25061-265A-42AD-8752-B22898868875</key>
+		<string>https://github.com/TheAmazingAudioEngine/TheAmazingAudioEngine.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MediaStreamerTest.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>227C6C99-E362-4833-A08C-F9092426A962</key>
+		<string>..</string>
+		<key>67E25061-265A-42AD-8752-B22898868875</key>
+		<string>../TheAmazingAudioEngine</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Apolotary/MediaStreamerTest.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>227C6C99-E362-4833-A08C-F9092426A962</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>227C6C99-E362-4833-A08C-F9092426A962</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MediaStreamerTest</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>67E25061-265A-42AD-8752-B22898868875</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TheAmazingAudioEngine</string>
+		</dict>
+	</array>
+</dict>
+</plist>

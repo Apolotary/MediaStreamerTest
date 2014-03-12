@@ -10,6 +10,7 @@
 #import "MSTConstants.h"
 #import <AVFoundation/AVFoundation.h>
 
+
 @interface MSTAudioManager ()
 {
     AVPlayer *_mainPlayer;
@@ -70,21 +71,15 @@
 
 - (void) playFileAtURL: (NSURL *) fileURL
 {
-    NSError *error;
-//    _mainPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&error];
-//    [_mainPlayer setNumberOfLoops:-1];
-//    [_mainPlayer play];
-    // NSLog(@"Song URL : %@", aSongURL);
+    NSString *urlString = [fileURL absoluteString];
+    urlString = [urlString stringByReplacingOccurrencesOfString:@"local." withString:@"local"];
+    fileURL = [NSURL URLWithString:urlString];
     
-    AVPlayerItem *aPlayerItem = [[AVPlayerItem alloc] initWithURL:fileURL];
-    AVPlayer *anAudioStreamer = [[AVPlayer alloc] initWithPlayerItem:aPlayerItem];
-    [anAudioStreamer play];
-    
-    // Access Current Time
-    NSTimeInterval aCurrentTime = CMTimeGetSeconds(anAudioStreamer.currentTime);
-    
-    // Access Duration
-    NSTimeInterval aDuration = CMTimeGetSeconds(anAudioStreamer.currentItem.asset.duration);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _mainPlayer = [[AVPlayer alloc] initWithURL:fileURL];
+        [_mainPlayer play];
+    });
+
 }
 
 - (void) playbackStart

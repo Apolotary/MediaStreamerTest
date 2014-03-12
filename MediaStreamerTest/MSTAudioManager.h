@@ -12,6 +12,7 @@
 
 @property float volumeLevel;
 
+
 + (MSTAudioManager *) sharedInstance;
 
 - (void) playFileAtURL: (NSURL *) fileURL;

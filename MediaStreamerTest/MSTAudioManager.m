@@ -11,9 +11,9 @@
 #import <AVFoundation/AVFoundation.h>
 
 
-@interface MSTAudioManager ()
+@interface MSTAudioManager () <AVAudioPlayerDelegate>
 {
-    AVPlayer *_mainPlayer;
+    AVAudioPlayer *_mainPlayer;
 }
 
 - (void) addNotificationHandlers;
@@ -71,21 +71,21 @@
 
 - (void) playFileAtURL: (NSURL *) fileURL
 {
-    NSString *urlString = [fileURL absoluteString];
-    urlString = [urlString stringByReplacingOccurrencesOfString:@"local." withString:@"local"];
-    fileURL = [NSURL URLWithString:urlString];
+    NSData *preloadedData = [NSData dataWithContentsOfURL:fileURL];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _mainPlayer = [[AVPlayer alloc] initWithURL:fileURL];
-        [_mainPlayer play];
-    });
-
+    NSError *error;
+    
+    _mainPlayer = [[AVAudioPlayer alloc] initWithData:preloadedData error:&error];
+    [_mainPlayer setNumberOfLoops:-1];
+    [_mainPlayer prepareToPlay];
+    [_mainPlayer play];
 }
 
 - (void) playbackStart
 {
     if (_mainPlayer)
     {
+        [_mainPlayer prepareToPlay];
         [_mainPlayer play];
     }
 }

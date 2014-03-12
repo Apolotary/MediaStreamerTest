@@ -186,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MediaStreamerTest/MSTConnectionManager+ServerAPI.m"
-            timestampString = "415076512.824467"
+            timestampString = "416317668.638079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "204"
@@ -232,7 +232,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MediaStreamerTest/MSTConnectionManager+ServerAPI.m"
-            timestampString = "415076512.824467"
+            timestampString = "416317668.638079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "210"
@@ -292,7 +292,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MediaStreamerTest/MSTConnectionManager+ServerAPI.m"
-            timestampString = "415076512.824467"
+            timestampString = "416317668.638079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "209"
@@ -324,7 +324,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MediaStreamerTest/MSTConnectionManager+ServerAPI.m"
-            timestampString = "415089116.790259"
+            timestampString = "416317668.638079"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "243"
@@ -432,7 +432,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CGDWebServer/GCDWebServerRequest.m"
@@ -448,7 +448,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CGDWebServer/GCDWebServerRequest.m"
@@ -480,7 +480,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CGDWebServer/GCDWebServerRequest.m"
@@ -500,7 +500,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MediaStreamerTest/MSTAudioManager.m"
-            timestampString = "416294376.338239"
+            timestampString = "416320260.511256"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "72"
@@ -532,12 +532,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MediaStreamerTest/MSTAudioManager.m"
-            timestampString = "416294464.616725"
+            timestampString = "416322257.144816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "-playFileAtURL:"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "-playbackStop"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -547,13 +547,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MediaStreamerTest/MSTAudioManager.m"
-            timestampString = "416294755.157241"
+            filePath = "MediaStreamerTest/MSTConnectionManager+ServerAPI.m"
+            timestampString = "416318077.690885"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "-playbackStop"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "-setStreamingSourceForRequest:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

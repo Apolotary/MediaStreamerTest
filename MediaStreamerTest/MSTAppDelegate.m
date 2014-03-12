@@ -7,6 +7,15 @@
 //
 
 #import "MSTAppDelegate.h"
+#import <AVFoundation/AVFoundation.h>
+
+@interface MSTAppDelegate ()
+{
+    AVPlayerItem *aPlayerItem;
+    AVPlayer *anAudioStreamer;
+}
+
+@end
 
 @implementation MSTAppDelegate
 

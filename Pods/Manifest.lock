@@ -18,14 +18,11 @@ PODS:
   - AFNetworking/UIKit (2.2.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - TheAmazingAudioEngine (1.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - TheAmazingAudioEngine (~> 1.2)
 
 SPEC CHECKSUMS:
   AFNetworking: e8cfd8f3fe3bfe19124a0cc63f4d45752d892a56
-  TheAmazingAudioEngine: e544f61ab180d6e83c9478cc47355420f61d7281
 
 COCOAPODS: 0.29.0

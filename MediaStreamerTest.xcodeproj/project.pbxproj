@@ -16,11 +16,8 @@
 		4327F46D18B8FA2A00AEC503 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46C18B8FA2A00AEC503 /* CoreAudio.framework */; };
 		4327F46F18B8FA2E00AEC503 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4327F46E18B8FA2E00AEC503 /* AudioToolbox.framework */; };
 		4327F47318B8FBD200AEC503 /* MSTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4327F47218B8FBD200AEC503 /* MSTConstants.m */; };
-		4330FE9B18BCBA8800F636D0 /* bass.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4330FE9A18BCBA8800F636D0 /* bass.mp3 */; };
-		4330FE9D18BCF4A800F636D0 /* acoustic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4330FE9C18BCF4A800F636D0 /* acoustic.mp3 */; };
 		4330FEA018BCF52200F636D0 /* MSTRemoteServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4330FE9F18BCF52200F636D0 /* MSTRemoteServiceViewController.m */; };
 		4330FEA318BD7B1B00F636D0 /* MSTServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4330FEA218BD7B1B00F636D0 /* MSTServiceCell.m */; };
-		4330FEA618BD8CD700F636D0 /* MSTWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4330FEA518BD8CD700F636D0 /* MSTWebServerRequest.m */; };
 		4383F0C118B8C1DD00C2D0DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C018B8C1DD00C2D0DF /* Foundation.framework */; };
 		4383F0C318B8C1DD00C2D0DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C218B8C1DD00C2D0DF /* CoreGraphics.framework */; };
 		4383F0C518B8C1DD00C2D0DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4383F0C418B8C1DD00C2D0DF /* UIKit.framework */; };
@@ -60,6 +57,9 @@
 		4383F14B18B8DFAB00C2D0DF /* MSTConnectionManager+ServerAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 4383F14A18B8DFAB00C2D0DF /* MSTConnectionManager+ServerAPI.m */; };
 		4383F15018B8DFCA00C2D0DF /* MSTAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4383F14F18B8DFCA00C2D0DF /* MSTAudioManager.m */; };
 		4383F15C18B8EDE200C2D0DF /* MSTRemoteService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4383F15B18B8EDE200C2D0DF /* MSTRemoteService.m */; };
+		43F09E0018D096F000B35160 /* funk_bass.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 43F09DFD18D096F000B35160 /* funk_bass.mp3 */; };
+		43F09E0118D096F000B35160 /* funk_drums.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 43F09DFE18D096F000B35160 /* funk_drums.mp3 */; };
+		43F09E0218D096F000B35160 /* funk_guitar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 43F09DFF18D096F000B35160 /* funk_guitar.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,14 +82,10 @@
 		4327F46E18B8FA2E00AEC503 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4327F47118B8FBD200AEC503 /* MSTConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTConstants.h; sourceTree = "<group>"; };
 		4327F47218B8FBD200AEC503 /* MSTConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTConstants.m; sourceTree = "<group>"; };
-		4330FE9A18BCBA8800F636D0 /* bass.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bass.mp3; sourceTree = "<group>"; };
-		4330FE9C18BCF4A800F636D0 /* acoustic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = acoustic.mp3; sourceTree = "<group>"; };
 		4330FE9E18BCF52200F636D0 /* MSTRemoteServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTRemoteServiceViewController.h; sourceTree = "<group>"; };
 		4330FE9F18BCF52200F636D0 /* MSTRemoteServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTRemoteServiceViewController.m; sourceTree = "<group>"; };
 		4330FEA118BD7B1B00F636D0 /* MSTServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTServiceCell.h; sourceTree = "<group>"; };
 		4330FEA218BD7B1B00F636D0 /* MSTServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTServiceCell.m; sourceTree = "<group>"; };
-		4330FEA418BD8CD700F636D0 /* MSTWebServerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTWebServerRequest.h; sourceTree = "<group>"; };
-		4330FEA518BD8CD700F636D0 /* MSTWebServerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTWebServerRequest.m; sourceTree = "<group>"; };
 		4383F0BD18B8C1DD00C2D0DF /* MediaStreamerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaStreamerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4383F0C018B8C1DD00C2D0DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4383F0C218B8C1DD00C2D0DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -165,6 +161,9 @@
 		4383F14F18B8DFCA00C2D0DF /* MSTAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTAudioManager.m; sourceTree = "<group>"; };
 		4383F15A18B8EDE200C2D0DF /* MSTRemoteService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTRemoteService.h; sourceTree = "<group>"; };
 		4383F15B18B8EDE200C2D0DF /* MSTRemoteService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTRemoteService.m; sourceTree = "<group>"; };
+		43F09DFD18D096F000B35160 /* funk_bass.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = funk_bass.mp3; sourceTree = "<group>"; };
+		43F09DFE18D096F000B35160 /* funk_drums.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = funk_drums.mp3; sourceTree = "<group>"; };
+		43F09DFF18D096F000B35160 /* funk_guitar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = funk_guitar.mp3; sourceTree = "<group>"; };
 		C85504A722C24AC4AEA4892C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1A48CBA4E224D228204C957 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,8 +265,9 @@
 		4383F0C718B8C1DD00C2D0DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4330FE9C18BCF4A800F636D0 /* acoustic.mp3 */,
-				4330FE9A18BCBA8800F636D0 /* bass.mp3 */,
+				43F09DFD18D096F000B35160 /* funk_bass.mp3 */,
+				43F09DFE18D096F000B35160 /* funk_drums.mp3 */,
+				43F09DFF18D096F000B35160 /* funk_guitar.mp3 */,
 				4383F0C818B8C1DD00C2D0DF /* MediaStreamerTest-Info.plist */,
 				4383F0C918B8C1DD00C2D0DF /* InfoPlist.strings */,
 				4383F0CC18B8C1DD00C2D0DF /* main.m */,
@@ -390,8 +390,6 @@
 				4383F14A18B8DFAB00C2D0DF /* MSTConnectionManager+ServerAPI.m */,
 				4383F15A18B8EDE200C2D0DF /* MSTRemoteService.h */,
 				4383F15B18B8EDE200C2D0DF /* MSTRemoteService.m */,
-				4330FEA418BD8CD700F636D0 /* MSTWebServerRequest.h */,
-				4330FEA518BD8CD700F636D0 /* MSTWebServerRequest.m */,
 			);
 			name = Server;
 			sourceTree = "<group>";
@@ -484,11 +482,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4330FE9D18BCF4A800F636D0 /* acoustic.mp3 in Resources */,
+				43F09E0218D096F000B35160 /* funk_guitar.mp3 in Resources */,
 				4383F0D918B8C1DD00C2D0DF /* Images.xcassets in Resources */,
+				43F09E0118D096F000B35160 /* funk_drums.mp3 in Resources */,
 				4383F0CB18B8C1DD00C2D0DF /* InfoPlist.strings in Resources */,
 				4383F0D418B8C1DD00C2D0DF /* Main.storyboard in Resources */,
-				4330FE9B18BCBA8800F636D0 /* bass.mp3 in Resources */,
+				43F09E0018D096F000B35160 /* funk_bass.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,7 +558,6 @@
 				4383F13D18B8DF4500C2D0DF /* DOUAudioStreamer.m in Sources */,
 				4383F13418B8DF4500C2D0DF /* DOUAudioEventLoop.m in Sources */,
 				4383F13718B8DF4500C2D0DF /* DOUAudioFrequencyAnalyzer.m in Sources */,
-				4330FEA618BD8CD700F636D0 /* MSTWebServerRequest.m in Sources */,
 				4383F13F18B8DF4500C2D0DF /* DOUEAGL1View.m in Sources */,
 				4383F15018B8DFCA00C2D0DF /* MSTAudioManager.m in Sources */,
 				4383F14018B8DF4500C2D0DF /* DOUEAGLView.m in Sources */,

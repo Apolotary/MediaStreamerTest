@@ -14,6 +14,28 @@
 
 @implementation MSTConnectionManager (ServerAPI)
 
+#pragma mark - Helper methods
+
+- (NSDictionary *) fetchDictionaryFromJSONFormData: (NSData *) data
+{
+    NSError *error;
+    
+    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    NSRange jsonOpening = [dataString rangeOfString:@"{"];
+    NSRange jsonEnding = [dataString rangeOfString:@"}"];
+    
+    NSRange searchRange = NSMakeRange(jsonOpening.location , jsonEnding.location - jsonOpening.location + 1);
+    
+    NSString *jsonString = [dataString substringWithRange:searchRange];
+    
+    NSLog(@"json string: %@", jsonString);
+    
+    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
+    
+    return jsonDict;
+}
+
 #pragma mark - API Handlers
 
 - (GCDWebServerResponse *) defaultResponse
@@ -37,8 +59,7 @@
     {
         if (request.hasBody)
         {
-            NSError *error;
-            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[request data] options:NSJSONReadingAllowFragments error:&error];
+            NSDictionary *jsonDict = [self fetchDictionaryFromJSONFormData:[request data]];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackSetVolume object:nil userInfo:@{kPlaybackSetVolumeKey : [jsonDict objectForKey:kAPIResponseKeyVolumeLevel]}];
             return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
@@ -64,21 +85,7 @@
     {
         if (request.hasBody)
         {
-            NSError *error;
-            
-            NSString *dataString = [[NSString alloc] initWithData:[request data] encoding:NSUTF8StringEncoding];
-            NSLog(@"String data: %@", dataString);
-            
-            NSRange jsonOpening = [dataString rangeOfString:@"{"];
-            NSRange jsonEnding = [dataString rangeOfString:@"}"];
-            
-            NSRange searchRange = NSMakeRange(jsonOpening.location , jsonEnding.location - jsonOpening.location + 1);
-            
-            NSString *jsonString = [dataString substringWithRange:searchRange];
-            
-            NSLog(@"json string: %@", jsonString);
-            
-            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
+            NSDictionary *jsonDict = [self fetchDictionaryFromJSONFormData:[request data]];
             
             self.streamingFilePath = [NSURL URLWithString:[jsonDict objectForKey:kAPIResponseKeyStreamingLink]];
             NSLog(@"New streaming URL: %@", self.streamingFilePath);
@@ -109,8 +116,7 @@
 {
     if (request.hasBody)
     {
-        NSError *error;
-        NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[request data] options:NSJSONReadingAllowFragments error:&error];
+        NSDictionary *jsonDict = [self fetchDictionaryFromJSONFormData:[request data]];
         
         if ([self.streamingFilePath isEqual:[NSURL URLWithString:[jsonDict objectForKey:kAPIResponseKeyStreamingLink]]])
         {
@@ -141,7 +147,7 @@
     }];
     
     [self.webServer addHandlerForMethod:@"GET"
-                              pathRegex:@"/.*\.mp3"
+                              pathRegex:@"/.*\\.mp3"
                            requestClass:[GCDWebServerRequest class]
                            processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
                                return [GCDWebServerFileResponse responseWithFile:[websitePath stringByAppendingPathComponent:request.path]];
@@ -190,14 +196,17 @@
 {
     // setting link and streaming status for future requests
     self.isStreaming = YES;
-    self.streamingFilePath = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%lu/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension]];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://%@:%du/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension];
+    
+    self.streamingFilePath = [NSURL URLWithString:urlString];
     
     
     // sending streaming link to other clients
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     NSError *error;
-    NSData *resultData = [NSJSONSerialization dataWithJSONObject:@{kAPIResponseKeyStreamingLink: [NSString stringWithFormat:@"http://%@:%lu/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension]}
+    NSData *resultData = [NSJSONSerialization dataWithJSONObject:@{kAPIResponseKeyStreamingLink: urlString}
                                                          options:NSJSONWritingPrettyPrinted
                                                            error:&error];
     
@@ -205,7 +214,10 @@
     {
         if ([remoteService isResolved])
         {
-            [manager POST:[NSString stringWithFormat:@"http://%@:%lu%@", remoteService.resolvedAddress, kServicePortNumber, kAPIPathSetStream] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            
+            NSString *postString = [NSString stringWithFormat:@"http://%@:%du%@", remoteService.resolvedAddress, kServicePortNumber, kAPIPathSetStream];
+            
+            [manager POST:postString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                 [formData appendPartWithFileData:resultData name:@"json" fileName:@"" mimeType:@"application/json"];
             } success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Successfully sent stream %@", responseObject);
@@ -240,7 +252,9 @@
     {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         
-        [manager POST:[NSString stringWithFormat:@"http://%@:%lu%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathSetVolume] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        NSString *postString = [NSString stringWithFormat:@"http://%@:%du%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathSetVolume];
+        
+        [manager POST:postString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
             NSError *error;
             NSData *resultData = [NSJSONSerialization dataWithJSONObject:@{kAPIResponseKeyVolumeLevel: [NSNumber numberWithFloat:volumeLevel]} options:NSJSONWritingPrettyPrinted error:&error];
@@ -261,7 +275,9 @@
     {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         
-        [manager POST:[NSString stringWithFormat:@"http://%@:%d%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathStopReceivingStream]
+        NSString *postString = [NSString stringWithFormat:@"http://%@:%d%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathStopReceivingStream];
+        
+        [manager POST:postString
          parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
              NSLog(@"Streaming stopped! %@", streamingClient.service.name);
              [[NSNotificationCenter defaultCenter] postNotificationName:kServiceStreamingStopNotification object:nil userInfo:@{kServiceStreamingStopKey: streamingClient.service.name}];
@@ -279,7 +295,9 @@
     {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         
-        [manager GET:[NSString stringWithFormat:@"http://%@:%d%@", streamingSource.resolvedAddress, kServicePortNumber, kAPIPathGetStream] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *getString = [NSString stringWithFormat:@"http://%@:%d%@", streamingSource.resolvedAddress, kServicePortNumber, kAPIPathGetStream];
+        
+        [manager GET:getString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"Got stream: %@", [responseObject objectForKey:kAPIResponseKeyStreamingLink]);
             
             self.streamingFilePath = [NSURL URLWithString:[responseObject objectForKey:kAPIResponseKeyStreamingLink]];

@@ -101,20 +101,21 @@
                                     <action selector="stopStreamingButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="rCg-NW-blQ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Local sound file:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgK-oB-J86">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgK-oB-J86">
                                 <rect key="frame" x="17" y="188" width="283" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zeh-xv-KyI">
-                                <rect key="frame" x="0.0" y="233" width="176" height="44"/>
+                                <rect key="frame" x="72" y="233" width="176" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Set local sound file">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="setSoundFileButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="adm-eP-uGO"/>
                                     <action selector="stopStreamingButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="86J-pA-7Jd"/>
                                 </connections>
                             </button>
@@ -122,10 +123,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="_buttonSetSoundFile" destination="Zeh-xv-KyI" id="ikJ-ZF-e6h"/>
                         <outlet property="_buttonStartStream" destination="boG-5C-jph" id="FSh-9D-3eW"/>
                         <outlet property="_buttonStopStream" destination="DHr-mh-mPG" id="Kuk-qw-5GT"/>
                         <outlet property="_labelDNS" destination="ouc-UC-X4Z" id="98g-fd-rBl"/>
                         <outlet property="_labelLocalService" destination="98y-Gr-3vH" id="Anl-4p-omr"/>
+                        <outlet property="_labelSoundFile" destination="AgK-oB-J86" id="3Na-7c-G0c"/>
                         <outlet property="_labelStatus" destination="R5b-Ar-Efr" id="LcI-Nb-h8k"/>
                         <outlet property="_tableRemoteService" destination="5vX-E9-vZh" id="yMG-BQ-l66"/>
                     </connections>
@@ -187,7 +190,7 @@
                                     <action selector="adjustVolumeLevel:" destination="up8-pD-h1Q" eventType="valueChanged" id="mA6-XC-t5A"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sound file: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3al-ld-POg">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3al-ld-POg">
                                 <rect key="frame" x="20" y="184" width="280" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -201,6 +204,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="setSoundFileButtonPressed:" destination="up8-pD-h1Q" eventType="touchUpInside" id="21h-Zo-CTg"/>
                                     <action selector="stopStreamingButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="AK8-Zb-u7j"/>
                                 </connections>
                             </button>
@@ -210,6 +214,7 @@
                     <connections>
                         <outlet property="_labelDNS" destination="Fmx-jn-I9Q" id="Sm5-n9-c01"/>
                         <outlet property="_labelName" destination="CsY-nC-7T5" id="e6w-Cn-8PJ"/>
+                        <outlet property="_labelSoundFile" destination="3al-ld-POg" id="Ehd-gC-wr2"/>
                         <outlet property="_labelStatus" destination="Ue9-XO-tq4" id="PcN-se-pb7"/>
                         <outlet property="_volumeSlider" destination="gvh-Yb-wpi" id="6bU-hn-R6Q"/>
                     </connections>

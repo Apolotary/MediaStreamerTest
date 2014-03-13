@@ -53,6 +53,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setStreamingSource:) name:kPlaybackSetStreamingSource object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setVolume:) name:kPlaybackSetVolume object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackStop) name:kPlaybackStopCurrentStream object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackStop) name:kServiceStreamingStopNotification object:nil];
 }
 
 #pragma mark - Playback methods

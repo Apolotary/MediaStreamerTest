@@ -17,8 +17,13 @@
 // server methods
 - (void) addAPIHandlers;
 
-- (void) startStreamingFile: (NSString *) fileName
-              withExtension: (NSString *) fileExtension;
+// streams one file to all clients around it
+- (void) setStreamingFile: (NSString *) fileName
+            withExtension: (NSString *) fileExtension
+          forRemoteClient: (MSTRemoteService *) remoteService;
+
+- (void) startStreaming;
+
 - (void) stopStreaming;
 
 - (void) setVolumeLevel: (float) volumeLevel

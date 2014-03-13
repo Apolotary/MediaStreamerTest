@@ -89,7 +89,7 @@
             
             self.streamingFilePath = [NSURL URLWithString:[jsonDict objectForKey:kAPIResponseKeyStreamingLink]];
             NSLog(@"New streaming URL: %@", self.streamingFilePath);
-            [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackSetStreamingSource object:nil userInfo:@{kPlaybackSetStreamingSourceKey: self.streamingFilePath.absoluteString}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kServiceFileUpdatedNotification object:nil userInfo:nil];
         }
         
         return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
@@ -112,22 +112,18 @@
     return [GCDWebServerDataResponse responseWithData:responseData contentType:CONTENT_TYPE_JSON];
 }
 
-- (GCDWebServerResponse *) stopReceivingStreamForRequest: (GCDWebServerDataRequest *) request
+- (GCDWebServerResponse *) startPlayingCurrentStreamForRequest: (GCDWebServerRequest *) request
 {
-    if (request.hasBody)
-    {
-        NSDictionary *jsonDict = [self fetchDictionaryFromJSONFormData:[request data]];
-        
-        if ([self.streamingFilePath isEqual:[NSURL URLWithString:[jsonDict objectForKey:kAPIResponseKeyStreamingLink]]])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackStopCurrentStream object:nil];
-            
-            [self setStreamingFilePath:[NSURL URLWithString:@""]];
-            
-            return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
-        }
-    }
-    return [GCDWebServerResponse responseWithStatusCode:kResponseCodeBadRequest];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackSetStreamingSource object:nil userInfo:@{kPlaybackSetStreamingSourceKey: self.streamingFilePath.absoluteString}];
+    
+    return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
+}
+
+- (GCDWebServerResponse *) stopReceivingStreamForRequest: (GCDWebServerRequest *) request
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackStopCurrentStream object:nil];
+    
+    return [GCDWebServerResponse responseWithStatusCode:kResponseCodeSuccess];
 }
 
 #pragma mark - Server methods
@@ -183,24 +179,26 @@
     
     [self.webServer addHandlerForMethod:@"POST"
                                    path:kAPIPathStopReceivingStream
-                           requestClass:[GCDWebServerDataRequest class]
+                           requestClass:[GCDWebServerRequest class]
                            processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
-                               return [self stopReceivingStreamForRequest:(GCDWebServerDataRequest *) request];
+                               return [self stopReceivingStreamForRequest:(GCDWebServerRequest *) request];
+                           }];
+    
+    [self.webServer addHandlerForMethod:@"POST"
+                                   path:kAPIPathStartPlaying
+                           requestClass:[GCDWebServerRequest class]
+                           processBlock:^GCDWebServerResponse *(GCDWebServerRequest *request) {
+                               return [self startPlayingCurrentStreamForRequest:request];
                            }];
     
     NSLog(@"Server name: %@", [GCDWebServer serverName]);
 }
 
-- (void) startStreamingFile: (NSString *) fileName
-              withExtension: (NSString *) fileExtension
+- (void) setStreamingFile: (NSString *) fileName
+            withExtension: (NSString *) fileExtension
+          forRemoteClient: (MSTRemoteService *) remoteService
 {
-    // setting link and streaming status for future requests
-    self.isStreaming = YES;
-    
     NSString *urlString = [NSString stringWithFormat:@"http://%@:%d/%@.%@", self.localService.resolvedAddress, kServicePortNumber, fileName, fileExtension];
-    
-    self.streamingFilePath = [NSURL URLWithString:urlString];
-    
     
     // sending streaming link to other clients
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -210,25 +208,45 @@
                                                          options:NSJSONWritingPrettyPrinted
                                                            error:&error];
     
+    if ([remoteService isResolved])
+    {
+        NSString *postString = [NSString stringWithFormat:@"http://%@:%d%@", remoteService.resolvedAddress, kServicePortNumber, kAPIPathSetStream];
+        
+        [manager POST:postString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            [formData appendPartWithFileData:resultData name:@"json" fileName:@"" mimeType:@"application/json"];
+        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Successfully sent stream %@", responseObject);
+            [[NSNotificationCenter defaultCenter] postNotificationName:kServiceStreamingSuccessNotification object:nil userInfo:@{kServiceStreamingSuccessKey: remoteService.service.name}];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error, unable to send stream: %@", error.description);
+        }];
+    }
+}
+
+- (void) startStreaming
+{
+    self.isStreaming = YES;
+
+    // sending streaming link to other clients
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     for (MSTRemoteService *remoteService in self.availableServices)
     {
         if ([remoteService isResolved])
         {
             
-            NSString *postString = [NSString stringWithFormat:@"http://%@:%d%@", remoteService.resolvedAddress, kServicePortNumber, kAPIPathSetStream];
+            NSString *postString = [NSString stringWithFormat:@"http://%@:%d%@", remoteService.resolvedAddress, kServicePortNumber, kAPIPathStartPlaying];
             
-            [manager POST:postString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                [formData appendPartWithFileData:resultData name:@"json" fileName:@"" mimeType:@"application/json"];
-            } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"Successfully sent stream %@", responseObject);
+            [manager POST:postString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"Successfully started playing %@", responseObject);
                 [[NSNotificationCenter defaultCenter] postNotificationName:kServiceStreamingSuccessNotification object:nil userInfo:@{kServiceStreamingSuccessKey: remoteService.service.name}];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Error, unable to send stream: %@", error.description);
+                NSLog(@"Error, unable to start playing: %@", error.description);
             }];
         }
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kServiceStartedStreamingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kPlaybackSetStreamingSource object:nil userInfo:@{kPlaybackSetStreamingSourceKey: self.streamingFilePath.absoluteString}];
 }
 
 - (void) stopStreaming
@@ -276,7 +294,7 @@
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         
         NSString *postString = [NSString stringWithFormat:@"http://%@:%d%@", streamingClient.resolvedAddress, kServicePortNumber, kAPIPathStopReceivingStream];
-        
+
         [manager POST:postString
          parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
              NSLog(@"Streaming stopped! %@", streamingClient.service.name);

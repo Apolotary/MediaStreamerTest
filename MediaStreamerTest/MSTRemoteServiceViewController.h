@@ -20,6 +20,7 @@
     IBOutlet UILabel *_labelName;
     IBOutlet UILabel *_labelDNS;
     IBOutlet UILabel *_labelStatus;
+    IBOutlet UILabel *_labelSoundFile;
     
     IBOutlet UISlider *_volumeSlider;
 }
@@ -29,5 +30,6 @@
 
 - (IBAction)adjustVolumeLevel:(id)sender;
 - (IBAction)doneButtonPressed:(id)sender;
+- (IBAction)setSoundFileButtonPressed:(id)sender;
 
 @end

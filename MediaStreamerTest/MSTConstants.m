@@ -17,6 +17,8 @@ NSString * const kServiceSearchFinishedNotification = @"ServiceSearchFinishedNot
 NSString * const kServiceRemovedNotification        = @"ServiceRemovedNotification";
 NSString * const kServiceReadyForStreamingNotification = @"ServiceReadyForStreamingNotification";
 NSString * const kServiceStartedStreamingNotification  = @"ServiceStartedStreamingNotification";
+NSString * const kServiceFileUpdatedNotification = @"ServiceFileUpdatedNotification";
+
 
 NSString * const kServiceStreamingSuccessNotification  = @"ServiceStreamingSuccessNotification";
 NSString * const kServiceStreamingSuccessKey           = @"ServiceStreamingSuccessKey";
@@ -34,12 +36,17 @@ NSString * const kAPIPathGetStream = @"/api/getStream";
 NSString * const kAPIPathSetVolume = @"/api/setVolume";
 NSString * const kAPIPathSetStream = @"/api/setStream";
 NSString * const kAPIPathStopReceivingStream = @"/api/stopReceivingStream";
+NSString * const kAPIPathStartPlaying = @"/api/startPlaying";
 
 NSString * const kPlaybackSetStreamingSource    = @"PlaybackSetStreamingSource";
 NSString * const kPlaybackSetStreamingSourceKey = @"PlaybackSetStreamingSourceKey";
 NSString * const kPlaybackStopCurrentStream  = @"PlaybackStopCurrentStream";
 NSString * const kPlaybackSetVolume          = @"PlaybackSetVolume";
 NSString * const kPlaybackSetVolumeKey       = @"PlaybackSetVolumeKey";
+
+NSString * const kStreamingListExtensionKey = @"StreamingListExtensionKey";
+NSString * const kStreamingListFileKey    = @"StreamingListFileKey";
+
 
 // API Response codes
 const NSUInteger kResponseCodeSuccess    = 200;

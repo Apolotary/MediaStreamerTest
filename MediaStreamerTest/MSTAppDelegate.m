@@ -8,19 +8,18 @@
 
 #import "MSTAppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
-
-@interface MSTAppDelegate ()
-{
-    AVPlayerItem *aPlayerItem;
-    AVPlayer *anAudioStreamer;
-}
-
-@end
+#import "MSTConnectionManager.h"
 
 @implementation MSTAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //TODO: perhaps remove this later
+    NSString *defaultSoundFile = [[NSBundle mainBundle] pathForResource:@"funk_drums" ofType:@"mp3"];
+    [[MSTConnectionManager sharedInstance] setStreamingFilePath:[NSURL fileURLWithPath:defaultSoundFile]];
+    
+    NSLog(@"filepath: %@", [MSTConnectionManager sharedInstance].streamingFilePath.absoluteString);
+    
     // Override point for customization after application launch.
     return YES;
 }

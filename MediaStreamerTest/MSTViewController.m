@@ -15,11 +15,13 @@
 #import "MSTRemoteServiceViewController.h"
 #import "MSTServiceCell.h"
 
-@interface MSTViewController () <MSTRemoteServiceViewControllerProtocol>
+@interface MSTViewController () <MSTRemoteServiceViewControllerProtocol, UIActionSheetDelegate>
 {
     MSTConnectionManager *_connectionManager;
     MSTRemoteService *_pickedRemoteService;
     MSTRemoteServiceViewController *_remoteVC;
+
+    UIActionSheet *_pickerSheet;
 }
 
 - (void) addNotificationObservers;
@@ -65,6 +67,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateServiceInfo) name:kServiceReadyForStreamingNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startedStreaming) name:kServiceStartedStreamingNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateServiceInfo) name:kServiceSearchFinishedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateServiceInfo) name:kServiceFileUpdatedNotification object:nil];
 }
 
 - (void) removeNotificationObservers
@@ -72,6 +75,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kServiceReadyForStreamingNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kServiceStartedStreamingNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kServiceSearchFinishedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kServiceFileUpdatedNotification object:nil];
 }
 
 #pragma mark - Connection manager callbacks
@@ -80,6 +84,9 @@
 {
     [_labelLocalService setText:_connectionManager.localService.service.name];
     [_labelDNS setText:[NSString stringWithFormat:@"%@:%d", _connectionManager.localService.resolvedAddress, kServicePortNumber]];
+    [_labelSoundFile setText:[NSString stringWithFormat:@"%@", _connectionManager.streamingFilePath.absoluteString]];
+    
+    NSLog(@"Streaming filepath: %@", _connectionManager.streamingFilePath.absoluteString);
     
     if (_connectionManager.isStreaming)
     {
@@ -101,7 +108,7 @@
 
 - (void) startStreamingFile
 {
-    [_connectionManager startStreamingFile:@"acoustic" withExtension:@"mp3"];
+    [_connectionManager startStreaming];
 }
 
 #pragma mark - TableView callbacks
@@ -177,15 +184,46 @@
     [_connectionManager stopStreaming];
 }
 
-- (IBAction)startPlaybackButtonPressed:(id)sender
+- (IBAction)setSoundFileButtonPressed:(id)sender
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"acoustic" ofType:@"mp3"];
-    [[MSTAudioManager sharedInstance] playFileAtURL:[NSURL fileURLWithPath:filePath]];
+    _pickerSheet = [[UIActionSheet alloc] initWithTitle:@"Pick a sound file:"
+                                               delegate:self
+                                      cancelButtonTitle:@"Cancel"
+                                 destructiveButtonTitle:nil
+                                      otherButtonTitles:@"Bass", @"Drums", @"Guitar", nil];
+    [_pickerSheet showInView:self.view];
 }
 
-- (IBAction)stopPlaybackButtonPressed:(id)sender
+#pragma mark - Actionsheet view delegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [[MSTAudioManager sharedInstance] playbackStop];
+    NSLog(@"index: %d", buttonIndex);
+    
+    NSString *filePath = @"";
+    NSString *fileName = @"";
+    
+    if (buttonIndex == 0)
+    {
+        filePath = [[NSBundle mainBundle] pathForResource:@"funk_bass" ofType:@"mp3"];
+        fileName = @"funk_bass.mp3";
+    }
+    else if (buttonIndex == 1)
+    {
+        filePath = [[NSBundle mainBundle] pathForResource:@"funk_drums" ofType:@"mp3"];
+        fileName = @"funk_drums.mp3";
+    }
+    else if (buttonIndex == 2)
+    {
+        filePath = [[NSBundle mainBundle] pathForResource:@"funk_guitar" ofType:@"mp3"];
+        fileName = @"funk_guitar.mp3";
+    }
+    
+    if (buttonIndex != 3)
+    {
+        [_connectionManager setStreamingFilePath:[NSURL fileURLWithPath:filePath]];
+        [_labelSoundFile setText:[NSString stringWithFormat:@"%@", fileName]];
+    }
 }
 
 @end

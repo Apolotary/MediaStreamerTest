@@ -17,8 +17,8 @@
 @property BOOL isServer;
 @property BOOL isStreaming;
 @property (nonatomic, readonly) GCDWebServer     *webServer;
-@property (nonatomic, readonly) NSMutableArray   *availableServices; //TODO: Bad, bad idea! Gotta change that later
 @property (nonatomic, readonly) MSTRemoteService *localService;
+@property (nonatomic, readonly) NSMutableArray   *availableServices;
 @property (nonatomic, strong)   NSString         *serverName;
 @property (nonatomic, strong)   NSURL            *streamingFilePath;
 
